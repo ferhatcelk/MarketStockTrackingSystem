@@ -1,0 +1,32 @@
+# ── Satır Sonu Normalizasyonu ────────────────────────────────────────
+* text=auto
+
+# ── C# (Ana Uygulama) ────────────────────────────────────────────────
+*.cs    text eol=crlf linguist-language=C#
+
+# ── Web Katmanı ──────────────────────────────────────────────────────
+*.html  text eol=lf   linguist-language=HTML
+*.css   text eol=lf   linguist-language=CSS
+*.js    text eol=lf   linguist-language=JavaScript
+
+# ── Python Analiz ────────────────────────────────────────────────────
+*.py    text eol=lf   linguist-language=Python
+
+# ── Veri / Yapılandırma ──────────────────────────────────────────────
+*.json  text eol=lf
+*.md    text eol=lf
+*.csproj text eol=crlf
+
+# ── Binary Dosyalar ──────────────────────────────────────────────────
+*.exe   binary
+*.dll   binary
+*.png   binary
+*.jpg   binary
+*.gif   binary
+*.ico   binary
+*.pdb   binary
+
+# ── GitHub Dil İstatistiğine Dahil Edilmeyecekler ───────────────────
+*.Designer.cs linguist-generated=true
+bin/**        linguist-vendored=true
+obj/**        linguist-vendored=true

@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "sistem": "Market Stok Takip Sistemi",
+    "versiyon": "2.0",
+    "ihrac_tarihi": "2026-07-04",
+    "toplam_urun": 6,
+    "toplam_kategori": 3
+  },
+  "kategoriler": [
+    { "id": 1, "ad": "Süt Ürünleri" },
+    { "id": 2, "ad": "İçecekler"   },
+    { "id": 3, "ad": "Atıştırmalık" }
+  ],
+  "urunler": [
+    {
+      "id": 1, "barkod": "8690504001018",
+      "ad": "Sütaş Süt 1L", "kategori_id": 1,
+      "alis_fiyat": 18.50, "satis_fiyat": 24.90, "stok": 48,
+      "eklenme_tarihi": "2026-07-01T09:00:00"
+    },
+    {
+      "id": 2, "barkod": "8690526008490",
+      "ad": "Yoğurt 500g", "kategori_id": 1,
+      "alis_fiyat": 12.00, "satis_fiyat": 16.50, "stok": 32,
+      "eklenme_tarihi": "2026-07-01T09:05:00"
+    },
+    {
+      "id": 3, "barkod": "5449000000996",
+      "ad": "Cola 1.5L", "kategori_id": 2,
+      "alis_fiyat": 22.00, "satis_fiyat": 29.90, "stok": 75,
+      "eklenme_tarihi": "2026-07-01T09:10:00"
+    },
+    {
+      "id": 4, "barkod": "8690624010015",
+      "ad": "Meyve Suyu 1L", "kategori_id": 2,
+      "alis_fiyat": 15.75, "satis_fiyat": 21.50, "stok": 4,
+      "eklenme_tarihi": "2026-07-02T10:00:00"
+    },
+    {
+      "id": 5, "barkod": "8690624050028",
+      "ad": "Cips 100g", "kategori_id": 3,
+      "alis_fiyat": 9.50, "satis_fiyat": 13.90, "stok": 63,
+      "eklenme_tarihi": "2026-07-02T11:00:00"
+    },
+    {
+      "id": 6, "barkod": "8690624090038",
+      "ad": "Çikolata 80g", "kategori_id": 3,
+      "alis_fiyat": 11.00, "satis_fiyat": 15.90, "stok": 2,
+      "eklenme_tarihi": "2026-07-03T08:30:00"
+    }
+  ],
+  "stok_hareketleri": [
+    { "id": 1, "urun_adi": "Sütaş Süt 1L",  "islem": "Ekleme",      "miktar": 48, "tarih": "2026-07-01T09:00:00" },
+    { "id": 2, "urun_adi": "Yoğurt 500g",    "islem": "Ekleme",      "miktar": 32, "tarih": "2026-07-01T09:05:00" },
+    { "id": 3, "urun_adi": "Cola 1.5L",      "islem": "Ekleme",      "miktar": 75, "tarih": "2026-07-01T09:10:00" },
+    { "id": 4, "urun_adi": "Meyve Suyu 1L",  "islem": "Ekleme",      "miktar": 20, "tarih": "2026-07-02T10:00:00" },
+    { "id": 5, "urun_adi": "Meyve Suyu 1L",  "islem": "Güncelleme",  "miktar": 4,  "tarih": "2026-07-02T14:30:00" },
+    { "id": 6, "urun_adi": "Cips 100g",      "islem": "Ekleme",      "miktar": 63, "tarih": "2026-07-02T11:00:00" },
+    { "id": 7, "urun_adi": "Çikolata 80g",   "islem": "Ekleme",      "miktar": 10, "tarih": "2026-07-03T08:30:00" },
+    { "id": 8, "urun_adi": "Çikolata 80g",   "islem": "Güncelleme",  "miktar": 2,  "tarih": "2026-07-04T10:00:00" }
+  ]
+}

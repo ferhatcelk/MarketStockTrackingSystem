@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Market Stok Takip Sistemi — .NET Framework ile geliştirilmiş profesyonel Windows Forms uygulaması." />
+  <title>Market Stok Takip Sistemi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── CANVAS (Arka plan partikülleri) ─────────────────────────────── -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="nav-icon">🛒</span>
+        <span class="nav-title">StokTakip</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#ozellikler">Özellikler</a></li>
+        <li><a href="#mimari">Mimari</a></li>
+        <li><a href="#teknoloji">Teknolojiler</a></li>
+        <li><a href="#istatistik">İstatistik</a></li>
+        <li><a href="https://github.com/ferhatcelk/MarketStockTrackingSystem" target="_blank" class="nav-cta">GitHub →</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-badge"><span class="badge-dot"></span> .NET Framework 4.8 · Windows Forms</div>
+    <h1 class="hero-title">
+      Market Stok<br />
+      <span class="gradient-text">Takip Sistemi</span>
+    </h1>
+    <p class="hero-sub">
+      Katmanlı mimari ve OOP prensipleriyle geliştirilmiş profesyonel masaüstü uygulaması.
+      Gerçek zamanlı stok takibi, istatistik dashboard ve hareket geçmişi tek ekranda.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/ferhatcelk/MarketStockTrackingSystem" class="btn-primary" target="_blank">
+        ⬇ Kaynak Kodunu İndir
+      </a>
+      <a href="#ozellikler" class="btn-ghost">Özellikleri Keşfet →</a>
+    </div>
+
+    <!-- Mini KPI kartları -->
+    <div class="hero-stats">
+      <div class="hstat-card" data-count="5" data-suffix=" Katman">
+        <span class="hstat-num">0</span>
+        <span class="hstat-lbl">Mimari Katman</span>
+      </div>
+      <div class="hstat-card" data-count="12" data-suffix=" Form">
+        <span class="hstat-num">0</span>
+        <span class="hstat-lbl">UserControl / Form</span>
+      </div>
+      <div class="hstat-card" data-count="4" data-suffix=" VY">
+        <span class="hstat-num">0</span>
+        <span class="hstat-lbl">Veri Yapısı (Stack/Queue/List/Dict)</span>
+      </div>
+      <div class="hstat-card" data-count="100" data-suffix="%">
+        <span class="hstat-num">0</span>
+        <span class="hstat-lbl">OOP Uyumluluk</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ÖZELLİKLER ───────────────────────────────────────────────────── -->
+  <section id="ozellikler" class="section">
+    <div class="section-header">
+      <div class="section-tag">✨ Özellikler</div>
+      <h2>Her İhtiyacı Karşılayan Araçlar</h2>
+      <p>Ürün yönetiminden detaylı istatistiklere, modern bir arayüz ile tam kontrol.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(99,102,241,.15);color:#6366f1">📊</div>
+        <h3>Dashboard &amp; İstatistik</h3>
+        <p>Toplam ürün, düşük stok uyarısı, bugünkü işlem sayısı ve stok değeri anlık KPI kartlarıyla görüntülenir.</p>
+        <ul class="feat-list">
+          <li>Canlı saat gösterimi</li>
+          <li>Alış / Satış değeri hesabı</li>
+          <li>Kâr potansiyeli özeti</li>
+          <li>Son 12 hareket tablosu</li>
+        </ul>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(59,130,246,.15);color:#3b82f6">📦</div>
+        <h3>Ürün Yönetimi</h3>
+        <p>CRUD işlemleri, barkod takibi, kategori bazlı filtreleme ve çift tıklama ile hızlı düzenleme.</p>
+        <ul class="feat-list">
+          <li>Barkod benzersizlik kontrolü</li>
+          <li>Alış / Satış fiyatı takibi</li>
+          <li>Anlık arama &amp; filtreleme</li>
+          <li>Satır bazlı silme onayı</li>
+        </ul>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(245,158,11,.15);color:#f59e0b">🗂️</div>
+        <h3>Kategori Yönetimi</h3>
+        <p>Kategorileri ekle, düzenle veya sil. Bağlı ürün varsa silme işlemi engellenir.</p>
+        <ul class="feat-list">
+          <li>Dictionary&lt;int,Category&gt; yapısı</li>
+          <li>Refere bütünlüğü koruması</li>
+          <li>Çift tıkla hızlı düzenleme</li>
+          <li>Anlık sayaç gösterimi</li>
+        </ul>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(239,68,68,.15);color:#ef4444">📋</div>
+        <h3>Stok Hareketleri</h3>
+        <p>Her işlem Stack&lt;StockMovement&gt; yapısıyla LIFO sırasında kaydedilir ve renkli tabloda gösterilir.</p>
+        <ul class="feat-list">
+          <li>Ekleme 🟢 / Silme 🔴 / Güncelleme 🟡</li>
+          <li>Tarih &amp; saat damgası</li>
+          <li>Tür bazlı renk kodlama</li>
+          <li>Bugünkü işlem filtresi</li>
+        </ul>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(16,185,129,.15);color:#10b981">🔒</div>
+        <h3>Validasyon &amp; İş Kuralları</h3>
+        <p>Tüm doğrulama mantığı servis katmanında; formlar sadece kullanıcıdan veri alır.</p>
+        <ul class="feat-list">
+          <li>ErrorProvider ile anlık geri bildirim</li>
+          <li>Negatif fiyat/stok engeli</li>
+          <li>Barkod çakışma kontrolü</li>
+          <li>Boş alan validasyonu</li>
+        </ul>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(139,92,246,.15);color:#8b5cf6">🎨</div>
+        <h3>Modern Arayüz</h3>
+        <p>Sidebar navigasyon, vibrant renk paleti, hover efektleri ve tam ekran desteği.</p>
+        <ul class="feat-list">
+          <li>Maximized başlatma</li>
+          <li>Sayfa kaybı olmayan navigasyon</li>
+          <li>Özel renk kodlu bileşenler</li>
+          <li>ToolTip yardım sistemi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MİMARİ ────────────────────────────────────────────────────────── -->
+  <section id="mimari" class="section section-dark">
+    <div class="section-header">
+      <div class="section-tag">🏗 Mimari</div>
+      <h2>Katmanlı Yazılım Mimarisi</h2>
+      <p>Her katmanın sorumluluğu birbirinden kesin çizgilerle ayrılmıştır.</p>
+    </div>
+    <div class="arch-flow">
+      <div class="arch-layer" style="--accent:#6366f1">
+        <div class="arch-icon">🖥️</div>
+        <h4>Sunum Katmanı</h4>
+        <p>Forms / UserControls</p>
+        <div class="arch-items">
+          <span>MainForm</span>
+          <span>DashboardControl</span>
+          <span>ProductListControl</span>
+          <span>CategoryControl</span>
+          <span>StockMovementControl</span>
+          <span>ProductAddForm</span>
+        </div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-layer" style="--accent:#3b82f6">
+        <div class="arch-icon">⚙️</div>
+        <h4>İş Mantığı Katmanı</h4>
+        <p>Services</p>
+        <div class="arch-items">
+          <span>ProductService</span>
+          <span>CategoryService</span>
+          <span>StockMovementService</span>
+        </div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-layer" style="--accent:#10b981">
+        <div class="arch-icon">🗄️</div>
+        <h4>Veri Katmanı</h4>
+        <p>Data</p>
+        <div class="arch-items">
+          <span>DataStore (Singleton)</span>
+          <span>List&lt;Product&gt;</span>
+          <span>Stack&lt;Movement&gt;</span>
+          <span>Queue&lt;Product&gt;</span>
+          <span>Dictionary&lt;int,Cat&gt;</span>
+        </div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-layer" style="--accent:#f59e0b">
+        <div class="arch-icon">📐</div>
+        <h4>Model Katmanı</h4>
+        <p>Models</p>
+        <div class="arch-items">
+          <span>Product</span>
+          <span>Category</span>
+          <span>StockMovement</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEKNOLOJİLER ─────────────────────────────────────────────────── -->
+  <section id="teknoloji" class="section">
+    <div class="section-header">
+      <div class="section-tag">🛠 Teknolojiler</div>
+      <h2>Kullanılan Teknoloji Yığını</h2>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <span class="tech-logo">C#</span>
+        <span class="tech-name">C# 7.3</span>
+        <span class="tech-role">Ana Dil</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-logo">.NET</span>
+        <span class="tech-name">.NET Framework 4.8</span>
+        <span class="tech-role">Runtime</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-logo">WF</span>
+        <span class="tech-name">Windows Forms</span>
+        <span class="tech-role">UI Framework</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-logo">VS</span>
+        <span class="tech-name">Visual Studio 2022</span>
+        <span class="tech-role">IDE</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-logo">🐍</span>
+        <span class="tech-name">Python 3.x</span>
+        <span class="tech-role">Veri Analizi</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-logo">&lt;/&gt;</span>
+        <span class="tech-name">HTML5 + CSS3 + JS</span>
+        <span class="tech-role">Web Dokümantasyonu</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── İSTATİSTİK ───────────────────────────────────────────────────── -->
+  <section id="istatistik" class="section section-dark">
+    <div class="section-header">
+      <div class="section-tag">📈 İstatistik</div>
+      <h2>Proje Rakamları</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-block" data-count="1200" data-suffix="+ Satır">
+        <span class="stat-num">0</span>
+        <span class="stat-lbl">Kod Satırı (C#)</span>
+      </div>
+      <div class="stat-block" data-count="15" data-suffix=" Dosya">
+        <span class="stat-num">0</span>
+        <span class="stat-lbl">C# Kaynak Dosyası</span>
+      </div>
+      <div class="stat-block" data-count="4" data-suffix=" Katman">
+        <span class="stat-num">0</span>
+        <span class="stat-lbl">Mimari Katman</span>
+      </div>
+      <div class="stat-block" data-count="6" data-suffix=" Sayfa">
+        <span class="stat-num">0</span>
+        <span class="stat-lbl">Uygulama Sayfası</span>
+      </div>
+    </div>
+
+    <!-- Dil Yüzdesi Bar -->
+    <div class="lang-section">
+      <h3>GitHub Dil Dağılımı</h3>
+      <div class="lang-bar">
+        <div class="lang-seg" style="width:65%;background:#178600" title="C# - 65%"></div>
+        <div class="lang-seg" style="width:14%;background:#e34c26" title="HTML - 14%"></div>
+        <div class="lang-seg" style="width:12%;background:#563d7c" title="CSS - 12%"></div>
+        <div class="lang-seg" style="width:5%;background:#f1e05a" title="JavaScript - 5%"></div>
+        <div class="lang-seg" style="width:4%;background:#3572A5" title="Python - 4%"></div>
+      </div>
+      <div class="lang-legend">
+        <span><em style="background:#178600"></em> C#</span>
+        <span><em style="background:#e34c26"></em> HTML</span>
+        <span><em style="background:#563d7c"></em> CSS</span>
+        <span><em style="background:#f1e05a"></em> JavaScript</span>
+        <span><em style="background:#3572A5"></em> Python</span>
+      </div>
+    </div>
+
+    <!-- Mini chart (Canvas) -->
+    <div class="chart-wrapper">
+      <canvas id="stockChart"></canvas>
+      <p class="chart-caption">Örnek stok analiz grafiği (Python script çıktısından)</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────────── -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-icon">🛒</span>
+        <span>Market Stok Takip Sistemi</span>
+      </div>
+      <p class="footer-sub">Üniversite Bitirme Ödevi · 2026 · C# / Windows Forms</p>
+      <div class="footer-links">
+        <a href="https://github.com/ferhatcelk/MarketStockTrackingSystem" target="_blank">GitHub</a>
+        <a href="#hero">Yukarı ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
