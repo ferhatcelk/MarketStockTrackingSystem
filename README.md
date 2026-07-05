@@ -242,19 +242,33 @@ MarketStockTrackingSystem-main/
 ### 4️⃣ Yöntem A — .exe ile Doğrudan Çalıştır (En Hızlı)
 
 > Bu yöntem **herhangi bir geliştirme ortamı gerektirmez**.
-> Sadece çalıştırılabilir dosyaya çift tıklamanız yeterlidir.
+> Derlenmiş `.exe` dosyası repoya dahil edilmiştir; indirip çalıştırmanız yeterlidir.
 
-1. Proje klasörüne gidin
-2. Aşağıdaki yolu izleyin:
-   ```
-   MarketStockTrackingSystem\
-   └── bin\
-       └── Debug\
-           └── MarketStokTakip.exe   ← Buna çift tıklayın ✅
-   ```
+#### Adım 1 — Repoyu indirin (ZIP veya git clone — bkz. [Adım 3](#3️⃣-repoyu-klonlama))
 
-> ⚠️ **`bin\Debug` klasörü boşsa** uygulamayı önce derlemeniz gerekir.
-> [Yöntem B](#5️⃣-yöntem-b-visual-studio-2022-ile-aç-ve-derle) veya [Yöntem C](#6️⃣-yöntem-c-komut-satırından-derle-msbuild)'yi uygulayın.
+#### Adım 2 — `release\` klasörüne gidin
+
+```
+MarketStockTrackingSystem\
+└── release\
+    └── MarketStokTakip.exe   ← Buna çift tıklayın ✅
+```
+
+#### Adım 3 — Çalıştırın
+
+`MarketStokTakip.exe` dosyasına **çift tıklayın**.
+
+Uygulama **tam ekran** olarak açılır ve doğrudan **Dashboard** sayfasıyla karşılarsınız.
+
+> ⚠️ **"Windows koruması" uyarısı çıkarsa:**
+> 1. **"Daha fazla bilgi"** linkine tıklayın
+> 2. **"Yine de çalıştır"** butonuna basın
+>
+> Bu uyarı, dosyanın internetten indirilmesinden dolayı Windows SmartScreen tarafından
+> gösterilir. Uygulama güvenlidir.
+
+> ⚠️ **`.NET Framework` hatası alırsanız:**
+> [Adım 2 — .NET Framework Kurulumu](#2️⃣-net-framework-48-kurulumu) bölümüne bakın.
 
 ---
 
