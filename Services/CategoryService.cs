@@ -36,6 +36,7 @@ namespace MarketStokTakip.Services
 
             // Dictionary kullanımı: Id → Category eşlemesi
             _store.Categories[newId] = newCategory;
+            _store.CategoryRepo.Insert(newCategory);    // ← SQLite'a kaydet
         }
 
         // ── Kategori Güncelleme ────────────────────────────────────────────
@@ -63,6 +64,7 @@ namespace MarketStokTakip.Services
             }
 
             _store.Categories[categoryId].Name = newName.Trim();
+            _store.CategoryRepo.Update(_store.Categories[categoryId]); // ← SQLite'ta güncelle
         }
 
         // ── Kategori Silme ─────────────────────────────────────────────────
@@ -84,6 +86,7 @@ namespace MarketStokTakip.Services
                     "Bu kategoriye ait ürünler var. Önce ürünleri silin veya başka kategoriye taşıyın.");
 
             _store.Categories.Remove(categoryId);
+            _store.CategoryRepo.Delete(categoryId);    // ← SQLite'tan sil
         }
 
         // ── Kategori Listeleme ─────────────────────────────────────────────

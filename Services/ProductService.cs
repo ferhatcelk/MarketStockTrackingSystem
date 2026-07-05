@@ -55,11 +55,12 @@ namespace MarketStokTakip.Services
             // Queue kullanımı: ürün stoğa eklenmeyi bekleyen kuyruğa alınır
             _store.PendingProducts.Enqueue(newProduct);
 
-            // Kuyruktan işlenerek ana listeye aktarılır
+            // Kuyruktan işlenerek hem belleğe hem SQLite'a aktarılır
             while (_store.PendingProducts.Count > 0)
             {
                 var pending = _store.PendingProducts.Dequeue();
                 _store.Products.Add(pending);
+                _store.ProductRepo.Insert(pending);      // ← SQLite'a kaydet
                 _movementService.AddMovement(pending.Name, "Ekleme", pending.Stock);
             }
         }
@@ -78,6 +79,7 @@ namespace MarketStokTakip.Services
                 throw new KeyNotFoundException("Silinecek ürün bulunamadı.");
 
             _store.Products.Remove(product);
+            _store.ProductRepo.Delete(productId);       // ← SQLite'tan sil
             _movementService.AddMovement(product.Name, "Silme", product.Stock);
         }
 
@@ -120,6 +122,7 @@ namespace MarketStokTakip.Services
             product.SellPrice = sellPrice;
             product.Stock     = stock;
 
+            _store.ProductRepo.Update(product);         // ← SQLite'ı güncelle
             _movementService.AddMovement(product.Name, "Güncelleme", product.Stock);
         }
 

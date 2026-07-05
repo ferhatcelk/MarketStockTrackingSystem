@@ -31,6 +31,7 @@ namespace MarketStokTakip.Services
 
             // Stack kullanımı: En son işlem en üstte (LIFO)
             _store.MovementHistory.Push(movement);
+            _store.MovementRepo.Insert(movement);   // ← SQLite'a kaydet
         }
 
         // ── Tüm Hareketleri Listele ────────────────────────────────────────

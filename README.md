@@ -242,30 +242,33 @@ MarketStockTrackingSystem-main/
 ### 4️⃣ Yöntem A — .exe ile Doğrudan Çalıştır (En Hızlı)
 
 > Bu yöntem **herhangi bir geliştirme ortamı gerektirmez**.
-> Derlenmiş `.exe` dosyası repoya dahil edilmiştir; indirip çalıştırmanız yeterlidir.
+> Derlenmiş `.exe` ve SQLite DLL dosyaları repoya dahil edilmiştir.
 
 #### Adım 1 — Repoyu indirin (ZIP veya git clone — bkz. [Adım 3](#3️⃣-repoyu-klonlama))
 
-#### Adım 2 — `release\` klasörüne gidin
+#### Adım 2 — `release\` klasörünün tam olduğundan emin olun
 
 ```
 MarketStockTrackingSystem\
 └── release\
-    └── MarketStokTakip.exe   ← Buna çift tıklayın ✅
+    ├── MarketStokTakip.exe      ← Ana uygulama
+    ├── System.Data.SQLite.dll   ← SQLite yönetilen katman
+    ├── x64\
+    │   └── SQLite.Interop.dll   ← 64-bit native SQLite motoru
+    └── x86\
+        └── SQLite.Interop.dll   ← 32-bit native SQLite motoru
 ```
 
-#### Adım 3 — Çalıştırın
+> ⚠️ **Tüm dosyaların aynı klasörde** bulunması zorunludur.
+> Sadece `.exe` dosyasını kopyalarsanız SQLite çalışmaz.
 
-`MarketStokTakip.exe` dosyasına **çift tıklayın**.
+#### Adım 3 — `MarketStokTakip.exe`'ye çift tıklayın
 
-Uygulama **tam ekran** olarak açılır ve doğrudan **Dashboard** sayfasıyla karşılarsınız.
+İlk açılışta `stok_takip.db` dosyası otomatik oluşturulur ve örnek veriler yüklenir.
+Uygulama kapanıp yeniden açıldığında **verileriniz korunur**.
 
 > ⚠️ **"Windows koruması" uyarısı çıkarsa:**
-> 1. **"Daha fazla bilgi"** linkine tıklayın
-> 2. **"Yine de çalıştır"** butonuna basın
->
-> Bu uyarı, dosyanın internetten indirilmesinden dolayı Windows SmartScreen tarafından
-> gösterilir. Uygulama güvenlidir.
+> **"Daha fazla bilgi"** → **"Yine de çalıştır"**
 
 > ⚠️ **`.NET Framework` hatası alırsanız:**
 > [Adım 2 — .NET Framework Kurulumu](#2️⃣-net-framework-48-kurulumu) bölümüne bakın.
