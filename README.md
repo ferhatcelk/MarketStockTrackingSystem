@@ -31,8 +31,9 @@
   - [Yöntem A: .exe ile Doğrudan Çalıştır](#4️⃣-yöntem-a--exe-ile-doğrudan-çalıştır-en-hızlı)
   - [Yöntem B: Visual Studio ile Aç ve Derle](#5️⃣-yöntem-b-visual-studio-2022-ile-aç-ve-derle)
   - [Yöntem C: Komut Satırından Derle](#6️⃣-yöntem-c-komut-satırından-derle-msbuild)
-  - [İlk Kullanım Rehberi](#7️⃣-ilk-kullanım-rehberi)
-  - [Sık Karşılaşılan Sorunlar](#8️⃣-sık-karşılaşılan-sorunlar--çözümler)
+  - [🗄️ Veritabanı Kurulumu (SQLite)](#7️⃣-veritabanı-kurulumu-sqlite)
+  - [İlk Kullanım Rehberi](#8️⃣-ilk-kullanım-rehberi)
+  - [Sık Karşılaşılan Sorunlar](#9️⃣-sık-karşılaşılan-sorunlar--çözümler)
 - [Python Analiz Aracı](#-python-analiz-aracı)
 - [Web Dokümantasyonu](#-web-dokümantasyonu)
 - [Katkı Sağlama](#-katkı-sağlama)
@@ -179,6 +180,7 @@ Kuruluma başlamadan önce sisteminizin aşağıdaki gereksinimleri karşıladı
 | **RAM** | 512 MB | 2 GB+ |
 | **Disk Alanı** | 200 MB | 500 MB |
 | **.NET Framework** | 4.8 | 4.8 |
+| **SQLite** | — *(kurulum gerekmez)* | Otomatik oluşur |
 | **Visual Studio** | — *(opsiyonel)* | 2022 Community |
 
 > 💡 **.NET Framework 4.8**, Windows 10 (v1903 ve üzeri) ile Windows 11'de **zaten yüklü** gelir.
@@ -390,7 +392,187 @@ cd "C:\Proje\Klasörünüz\MarketStockTrackingSystem"
 
 ---
 
-### 7️⃣ İlk Kullanım Rehberi
+### 7️⃣ Veritabanı Kurulumu (SQLite)
+
+> 💡 **Hiçbir kurulum gerekmez.** SQLite, uygulama ilk çalıştırıldığında veritabanı dosyasını otomatik oluşturur.
+> Ayrı bir veritabanı sunucusu, lisans veya yapılandırma dosyası gerekmez.
+
+---
+
+#### 📌 SQLite Nedir?
+
+**SQLite**, sunucu gerektirmeyen, dosya tabanlı, açık kaynaklı bir ilişkisel veritabanı motorudur.
+Tüm veriler tek bir `.db` dosyasında saklanır. Dünya genelinde en yaygın kullanılan gömülü
+veritabanı motorudur (Android, iOS, Firefox, Chrome içinde de kullanılır).
+
+| Özellik | SQLite |
+|---------|--------|
+| **Kurulum** | ❌ Gerekmez |
+| **Sunucu** | ❌ Gerekmez |
+| **Lisans** | ✅ Ücretsiz (Public Domain) |
+| **Dosya** | Tek `.db` dosyası |
+| **Boyut** | ~1 MB motor + verileriniz |
+| **Hız** | Yerel disk hızında |
+
+---
+
+#### ⚙️ Otomatik Kurulum Süreci
+
+Uygulama her başlangıcında şu adımları otomatik olarak gerçekleştirir:
+
+```
+Program.Main() çalışır
+    │
+    ├─→ 1. DatabaseContext.Initialize()
+    │       └─→ stok_takip.db dosyası yoksa → oluşturur
+    │           Tablolar yoksa → CREATE TABLE ile oluşturur
+    │           Tablolar varsa → dokunmaz (veri korunur)
+    │
+    └─→ 2. DataStore.LoadFromDatabase()
+            └─→ Mevcut veriler okunur → belleğe yüklenir
+                DB boşsa → örnek kategori ve ürünler eklenir
+```
+
+> ✅ Uygulama ilk kez açıldığında `stok_takip.db` yoksa oluşturulur.  
+> ✅ İkinci açılışta mevcut dosya okunur, **veriler korunur**.
+
+---
+
+#### 📁 Veritabanı Dosyası Nerede?
+
+```
+📂 Uygulama klasörü\
+├── MarketStokTakip.exe
+├── System.Data.SQLite.dll
+├── stok_takip.db          ← Veritabanı dosyası (ilk çalıştırmada oluşur)
+├── x64\
+│   └── SQLite.Interop.dll
+└── x86\
+    └── SQLite.Interop.dll
+```
+
+> **Not:** `stok_takip.db` dosyası `.exe` ile **aynı klasörde** oluşur.  
+> Bu dosyayı silmek tüm verileri sıfırlar ve örnek verilerle yeniden başlar.
+
+---
+
+#### 🗃️ Veritabanı Tablo Yapısı
+
+Uygulama 3 tablo oluşturur:
+
+**`Categories` — Kategoriler**
+```sql
+CREATE TABLE Categories (
+    Id   INTEGER PRIMARY KEY,   -- Otomatik benzersiz numara
+    Name TEXT    NOT NULL UNIQUE -- Kategori adı (tekrar edemez)
+);
+```
+
+**`Products` — Ürünler**
+```sql
+CREATE TABLE Products (
+    Id         INTEGER PRIMARY KEY,              -- Otomatik benzersiz numara
+    Barcode    TEXT    NOT NULL UNIQUE,          -- Barkod (tekrar edemez)
+    Name       TEXT    NOT NULL,                 -- Ürün adı
+    CategoryId INTEGER NOT NULL,                 -- Kategori bağlantısı (FK)
+    BuyPrice   REAL    NOT NULL,                 -- Alış fiyatı
+    SellPrice  REAL    NOT NULL,                 -- Satış fiyatı
+    Stock      INTEGER NOT NULL,                 -- Stok miktarı
+    FOREIGN KEY (CategoryId) REFERENCES Categories(Id)
+);
+```
+> `CategoryId` → `Categories.Id` ile **Foreign Key** ilişkisi kurar.
+> Yani bir ürün, mutlaka var olan bir kategoriye ait olmak zorundadır.
+
+**`StockMovements` — Stok Hareketleri**
+```sql
+CREATE TABLE StockMovements (
+    Id            INTEGER PRIMARY KEY AUTOINCREMENT, -- Otomatik artar
+    ProductName   TEXT    NOT NULL,   -- Ürün adının o anki kopyası
+    OperationType TEXT    NOT NULL,   -- "Ekleme" / "Güncelleme" / "Silme"
+    Quantity      INTEGER NOT NULL,   -- İşlem miktarı
+    DateTime      TEXT    NOT NULL    -- ISO 8601 tarih-saat formatı
+);
+```
+> Bu tablo bir **audit log**'dur — satırlar hiçbir zaman silinmez veya güncellenmez.
+> Ürün silinse bile o ürüne ait tüm hareketler burada korunur.
+
+---
+
+#### 🔗 Tablo İlişkileri
+
+```
+Categories           Products              StockMovements
+──────────           ────────              ──────────────
+Id ◄──────────────── CategoryId            Id (AUTOINCREMENT)
+Name                 Id                    ProductName (snapshot)
+                     Barcode               OperationType
+                     Name                  Quantity
+                     BuyPrice              DateTime
+                     SellPrice
+                     Stock
+```
+
+---
+
+#### 🔄 Veri Akışı (CRUD)
+
+Her işlemde **RAM ve SQLite eş zamanlı güncellenir:**
+
+```
+Ürün Ekleme:
+  ProductService.AddProduct()
+    ├─→ List<Product>.Add()            ← RAM (hız için)
+    └─→ ProductRepository.Insert()    ← SQLite (kalıcılık için)
+
+Ürün Silme:
+  ProductService.DeleteProduct()
+    ├─→ List<Product>.Remove()         ← RAM
+    └─→ ProductRepository.Delete()    ← SQLite
+
+Ürün Güncelleme:
+  ProductService.UpdateProduct()
+    ├─→ Product nesnesini günceller    ← RAM
+    └─→ ProductRepository.Update()    ← SQLite
+```
+
+---
+
+#### 🛠️ Veritabanını Görüntüleme (Opsiyonel)
+
+`stok_takip.db` dosyasını görsel olarak incelemek için ücretsiz araçlar:
+
+| Araç | Platform | İndirme |
+|------|----------|---------|
+| **DB Browser for SQLite** | Windows/Mac/Linux | [sqlitebrowser.org](https://sqlitebrowser.org) |
+| **SQLiteOnline** | Tarayıcı (online) | [sqliteonline.com](https://sqliteonline.com) |
+| **DBeaver** | Windows/Mac/Linux | [dbeaver.io](https://dbeaver.io) |
+
+**DB Browser ile açmak:**
+```
+1. DB Browser for SQLite'ı indirip kurun
+2. "Veritabanını Aç" butonuna tıklayın
+3. stok_takip.db dosyasını seçin
+4. "Veriyi Gözat" sekmesinde tablolarınızı görüntüleyin
+```
+
+---
+
+#### 🔁 Veritabanını Sıfırlama
+
+Tüm verileri silip baştan başlamak için:
+
+```
+1. Uygulamayı kapatın
+2. stok_takip.db dosyasını silin
+3. Uygulamayı yeniden açın → örnek verilerle sıfırdan başlar
+```
+
+> ⚠️ Bu işlem geri alınamaz. Tüm ürün, kategori ve hareket verileri silinir.
+
+---
+
+### 8️⃣ İlk Kullanım Rehberi
 
 Uygulama ilk açıldığında aşağıdaki adımları takip edin:
 
@@ -433,7 +615,7 @@ Sol menü → 🏠 Dashboard
 
 ---
 
-### 8️⃣ Sık Karşılaşılan Sorunlar & Çözümler
+### 9️⃣ Sık Karşılaşılan Sorunlar & Çözümler
 
 <details>
 <summary><b>❌ "Bu uygulama bu bilgisayarda çalıştırılamıyor" veya .NET hatası</b></summary>
@@ -517,6 +699,53 @@ GitHub sayfasında `Code → Download ZIP` seçeneğini kullanın
 # Visual Studio 2022 Professional/Enterprise için:
 & "C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe" MarketStokTakip.csproj /t:Build
 ```
+
+</details>
+
+<details>
+<summary><b>❌ "Unable to load DLL 'SQLite.Interop.dll'" veya SQLite hatası</b></summary>
+
+**Neden:** `SQLite.Interop.dll` dosyası eksik veya yanlış klasörde.
+
+**Çözüm:**
+
+`release\` klasörünün tam yapısını kontrol edin:
+```
+release\
+├── MarketStokTakip.exe        ✅ olmalı
+├── System.Data.SQLite.dll     ✅ olmalı
+├── x64\
+│   └── SQLite.Interop.dll     ✅ olmalı
+└── x86\
+    └── SQLite.Interop.dll     ✅ olmalı
+```
+
+Eksik dosya varsa repoyu yeniden ZIP olarak indirin — tüm dosyalar dahildir.
+
+> ⚠️ Sadece `MarketStokTakip.exe`'yi kopyalayıp çalıştırmak **yetmez**.
+> DLL dosyaları da aynı klasörde bulunmalıdır.
+
+</details>
+
+<details>
+<summary><b>❌ Veriler kayboldu / Uygulama kapanınca veriler gitmiş</b></summary>
+
+**Neden:** `stok_takip.db` dosyası silinmiş veya farklı klasörde oluşmuş olabilir.
+
+**Kontrol:**
+
+`.exe` dosyasının bulunduğu klasörde `stok_takip.db` dosyasının var olup olmadığını kontrol edin:
+```
+MarketStokTakip.exe'nin olduğu klasör\
+└── stok_takip.db   ← Bu dosya mevcut mu?
+```
+
+**Çözüm 1 — Dosya silinmişse:**
+Uygulama yeniden açıldığında otomatik oluşur (örnek verilerle başlar).
+
+**Çözüm 2 — Dosya başka klasördeyse:**
+Uygulamayı her zaman aynı klasörden çalıştırın.
+`stok_takip.db` her zaman `.exe` ile **aynı klasörde** oluşur.
 
 </details>
 
