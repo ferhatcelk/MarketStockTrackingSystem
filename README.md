@@ -46,7 +46,7 @@
 güncellenmesini, silinmesini, aranmasını ve filtrelenmesini sağlayan kullanıcı dostu bir
 Windows masaüstü uygulamasıdır.
 
-Bu proje **üniversite bitirme ödevi** kapsamında geliştirilmiş olup aşağıdaki yazılım
+Bu proje görsel programlama dersi kapsamında geliştirilmiş olup aşağıdaki yazılım
 geliştirme standartlarına uymaktadır:
 
 | Prensip | Açıklama |
